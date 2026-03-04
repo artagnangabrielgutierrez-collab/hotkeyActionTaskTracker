@@ -1,4 +1,8 @@
-export default function Box3() {
+interface Box3Props {
+  hotkey: string,
+}
+
+export default function Box3({hotkey}: Box3Props) {
   return (
     <div className="group bg-[#1a1b2e] border border-[#414868] rounded-lg text-[#c0caf5] p-3 h-full">
       <div
@@ -9,7 +13,7 @@ export default function Box3() {
         Current HotKey
         <hr className="w-[99%] mx-auto t border-white mt-1" />
         <div className="bg-[#1e1f32] border border-[#3b4261] rounded-md p-2 mt-2 flex items-center justify-center flex-1">
-          <p className="text-2xl tracking-widest absolute">x + x</p>
+          <p className="text-2xl tracking-widest ">x + x</p>
         </div>
       </div>
     </div>

@@ -1,15 +1,21 @@
 //@ts-nocheck
 
 import { create } from "zustand";
-
+import { persist } from "zustand/middleware";
 type useIsOpen = {
   isMenuOpen: boolean;
   setMenuOpen: (value: boolean) => void;
+
+  isAddNewTab: boolean;
+  setAddNewTab: (value: boolean) => void;
 };
 
 export const useIsOpen = create<useIsOpen>((set) => ({
   isMenuOpen: true,
   setMenuOpen: (value) => set({ isMenuOpen: value }),
+
+  isAddNewTab: false,
+  setAddNewTab: (value) => set({ isAddNewTab: value }),
 }));
 
 type DashboardInfo = {
@@ -17,25 +23,56 @@ type DashboardInfo = {
   name: string;
   progress: number;
   currentHotkey: string;
-  completionHistory: date[];
   currentConfiguration: string;
 };
 
-type DashboardStore = {
+type useDashboardInfo = {
   dashboardInfo: DashboardItem[];
-  setDashboardInfo: (updates: DashboardItem[]) => void;
+  setDashboardInfo: (newItem: DashboardItem) => void;
+  increaseProgress: (updatedItem: number) => void;
+};
+export const useDashboardInfo = create<useDashboardInfo>()(
+  persist(
+    (set) => ({
+      dashboardInfo: [
+        {
+          id: 1,
+          name: "Tracker 1",
+          currentProgress: 2,
+          maxProgress: 15,
+          hotkey: "F+1",
+        },
+        {
+          id: 2,
+          name: "Tracker 2",
+          currentProgress: 0,
+          maxProgress: 45,
+          hotkey: "F+2",
+        },
+      ],
+      setDashboardInfo: (newItem) =>
+        set((state) => ({
+          dashboardInfo: [...state.dashboardInfo, newItem],
+        })),
+      increaseProgress: (updatedItem) =>
+        set((state) => ({
+          dashboardInfo: state.dashboardInfo.map((item) =>
+            item.id === updatedItem.id ? updatedItem : item,
+          ),
+        })),
+    }),
+    {
+      name: "dashboard-info",
+    },
+  ),
+);
+
+type useActiveTab = {
+  activeTab: number;
+  setActiveTab: (val: number) => void;
 };
 
-export const useDashboardInfo = create<DashboardStore>((set) => ({
-  dashboardInfo: [
-    { id: 1, name: "Tracker 1", progress: 10, currentHotkey: "F+1", completionHistory: [1, 2, 3], currentConfiguration: {} },
-    { id: 2, name: "Tracker 2", progress: 45, currentHotkey: "F+2", completionHistory: [4, 5], currentConfiguration: {} },
-    { id: 3, name: "Tracker 3", progress: 70, currentHotkey: "F+3", completionHistory: [6], currentConfiguration: {} },
-    { id: 4, name: "Tracker 4", progress: 20, currentHotkey: "F+4", completionHistory: [7, 8, 9], currentConfiguration: {} },
-    { id: 5, name: "Tracker 5", progress: 90, currentHotkey: "F+5", completionHistory: [10], currentConfiguration: {} },
-  ],
-  setDashboardInfo: (updates) =>
-    set((state) => ({
-      dashboardInfo: { ...state.dashboardInfo, ...updates },
-    })),
+export const useActiveTab = create<useActiveTab>((set) => ({
+  activeTab: 1,
+  setActiveTab: (val) => set({ activeTab: val }),
 }));
