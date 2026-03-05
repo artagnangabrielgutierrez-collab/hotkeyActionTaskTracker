@@ -11,7 +11,7 @@ type useIsOpen = {
 };
 
 export const useIsOpen = create<useIsOpen>((set) => ({
-  isMenuOpen: true,
+  isMenuOpen: false,
   setMenuOpen: (value) => set({ isMenuOpen: value }),
 
   isAddNewTab: false,
@@ -39,15 +39,19 @@ export const useDashboardInfo = create<useDashboardInfo>()(
           id: 1,
           name: "Tracker 1",
           currentProgress: 2,
-          maxProgress: 15,
+          maxProgress: 3,
+          totalCompletion: 0,
           hotkey: "F+1",
+          completionHistoryDate: ["1/2/3"],
         },
         {
           id: 2,
           name: "Tracker 2",
           currentProgress: 0,
-          maxProgress: 45,
+          maxProgress: 5,
+          totalCompletion: 0,
           hotkey: "F+2",
+          completionHistoryDate: ["1/2/3"],
         },
       ],
       setDashboardInfo: (newItem) =>

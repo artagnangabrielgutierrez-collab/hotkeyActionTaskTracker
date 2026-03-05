@@ -26,7 +26,7 @@ export default function AddNewTab() {
   }
 
   return (
-    <section className="w-full min-h-[94vh]  bg-transparent flex justify-center items-start absolute pt-40">
+    <section className="w-full min-h-[94vh]  bg-transparent flex justify-center items-start absolute pt-40 z-15">
       <div className="w-full max-w-2xl mx-4 rounded-xl border border-[#1e293b] bg-[#0f172a] shadow-2xl shadow-black/50  ">
         <div className="relative border-b border-[#1e293b] p-6">
           <h2 className="text-xl font-bold text-slate-100">Add New Tab</h2>

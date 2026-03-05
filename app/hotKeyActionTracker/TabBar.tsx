@@ -9,7 +9,7 @@ import {
 interface TabBarprops {
   name: string;
 }
-
+import { Zap, Award } from "lucide-react";
 export default function TabBar({ name }: TabBarprops) {
   const tabName = useDashboardInfo((state) => state.dashboardInfo);
   const setAddNewTab = useIsOpen((state) => state.setAddNewTab);
@@ -73,18 +73,37 @@ export default function TabBar({ name }: TabBarprops) {
         >
           &gt;{" "}
         </button>
-        <button
-  onClick={() => {
-    localStorage.clear();
-    window.location.reload();
-  }}
-  className="rounded-lg border border-red-500/40 bg-red-950/40 hover:bg-red-900/50 shadow-lg shadow-red-950/20
-   hover:shadow-red-500 w-15 h-9 ml-auto transition-all duration-300 hover:border-red-400/60 active:scale-95"
->
-  <span className=" text-sm font-semibold text-red-400 hover:text-red-300 tracking-wide">
-    Reset
-  </span>
-</button>
+        {/*  */}
+        <div className="flex flex-row items-center gap-2 ml-auto">
+          <div className="flex flex-row items-center gap-2 ml-auto mb-3">
+            {/* 
+            <div className="flex items-center gap-1  px-2 py-1  rounded-lg border border-orange-500/30 bg-linear-to-r from-orange-500/20 to-yellow-500/20 hover:from-orange-500/30 hover:to-yellow-500/30 cursor-pointer transition-all">
+              <Zap className="w-3 h-3  text-yellow-400" />
+              <span className="text-xs  font-semibold text-orange-300">
+                Achievements
+              </span>
+            </div> */}{" "}
+            {/* Achievements,i might add it later */}
+            <div className="flex items-center gap-1 px-2  py-1  rounded-lg border border-purple-500/30 bg-linear-to-r from-purple-500/20 to-pink-500/20 hover:from-purple-500/30 hover:to-pink-500/30 transition-all ml-auto">
+              <Award className="w-3 h-3  text-purple-400" />
+              <span className="text-xs font-semibold text-purple-300">
+                Total
+              </span>
+            </div>
+            <button
+              onClick={() => {
+                localStorage.clear();
+                window.location.reload();
+              }}
+              className="flex items-center px-2 py-1 rounded-lg border border-red-500/40 bg-red-950/40 hover:bg-red-900/50 shadow-lg shadow-red-950/20 hover:shadow-red-500 transition-all duration-300 hover:border-red-400/60 active:scale-95"
+            >
+              <span className="text-xs font-semibold text-red-400 hover:text-red-300 tracking-wide">
+                Reset
+              </span>
+            </button>
+          </div>
+        </div>
+        {/*  */}
       </div>
 
       <div className="w-full p-1 h-1 bg-indigo-500"></div>

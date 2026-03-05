@@ -22,7 +22,9 @@ export const links = [
 function Navbar() {
   const isMenuOpen = useIsOpen((state) => state.isMenuOpen);
   const setMenuOpen = useIsOpen((state) => state.setMenuOpen);
+  
   return (
+    <>
     <nav className="flex items-center justify-between  px-2 py-3 border-b border-neutral-800 bg-black text-white text-sm ">
       <div className="flex items-center font-semibold text-base">
         <span className="text-white">▲</span>
@@ -42,6 +44,7 @@ function Navbar() {
       </div>
 
       <div className="flex items-center gap-2 text-xl">
+
         <button className="text-neutral-400 hover:text-white transition-colors p-1.5">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -73,6 +76,16 @@ function Navbar() {
         </button>
       </div>
     </nav>
+                  {isMenuOpen && (
+            <section className="flex flex-row items-center justify-center gap-10 md:hidden">
+              {links.map((e, i) => (
+                <Link key={i} href={e.href} className=" py-1 pl-5 ">
+                  {e.label}
+                </Link>
+              ))}
+            </section>
+          )}
+    </>
   );
 }
 
