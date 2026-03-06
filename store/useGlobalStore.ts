@@ -45,7 +45,12 @@ export const useDashboardInfo = create<useDashboardInfo>()(
           maxProgress: 3,
           totalCompletion: 0,
           hotkey: "F+1",
-          completionHistoryDate: ["1/2/3", "2/2/3", "3/2/3", "4/2/3"],
+          completionHistoryDate: [
+            { time: "1/2/3" },
+            { time: "1/2/3" },
+            { time: "1/2/3" },
+            { time: "1/2/3" },
+          ],
           completionAnimation: false,
         },
         {
@@ -55,7 +60,12 @@ export const useDashboardInfo = create<useDashboardInfo>()(
           maxProgress: 5,
           totalCompletion: 0,
           hotkey: "F+2",
-          completionHistoryDate: ["1/2/3"],
+          completionHistoryDate: [
+            { time: "1/2/3" },
+            { time: "1/2/3" },
+            { time: "1/2/3" },
+            { time: "1/2/3" },
+          ],
           completionAnimation: false,
         },
       ],
