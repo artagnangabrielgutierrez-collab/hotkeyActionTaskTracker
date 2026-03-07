@@ -1,5 +1,9 @@
 "use client";
-
+import {
+  useDashboardInfo,
+  useActiveTab,
+  useIsOpen,
+} from "@/store/useGlobalStore";
 import AddNewTab from "./AddNewTab";
 import Box1 from "./Box1";
 import Box2 from "./Box2";
@@ -7,19 +11,17 @@ import Box3 from "./Box3";
 import Box4 from "./Box4";
 import Box5 from "./Box5";
 import TabBar from "./TabBar";
-import {
-  useDashboardInfo,
-  useActiveTab,
-  useIsOpen,
-} from "@/store/useGlobalStore";
+
 export default function HotKeyActionTracker() {
   const dashboardInfo = useDashboardInfo((state) => state.dashboardInfo);
 
   const activeTab = useActiveTab((state) => state.activeTab);
   const isAddNewTab = useIsOpen((state) => state.isAddNewTab);
 
+
   return (
     <section className="min-h-[90vh] pb-6 ">
+
       {isAddNewTab && <AddNewTab />}
 
       <TabBar />

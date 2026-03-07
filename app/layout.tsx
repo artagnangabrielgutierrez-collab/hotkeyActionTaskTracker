@@ -2,7 +2,9 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import Link from "next/link";
 import "./globals.css";
-import { useIsOpen } from "@/store/useGlobalStore";
+import { useIsOpen, useDashboardInfo } from "@/store/useGlobalStore";
+import { useEffect } from "react";
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -76,24 +78,24 @@ function Navbar() {
         </button>
       </div>
     </nav>
-                  {isMenuOpen && (
-            <section className="flex flex-row items-center justify-center gap-10 md:hidden">
-              {links.map((e, i) => (
-                <Link key={i} href={e.href} className=" py-1 pl-5 ">
-                  {e.label}
-                </Link>
-              ))}
-            </section>
-          )}
+      {isMenuOpen && (
+        <section className="flex flex-row items-center justify-center gap-10 md:hidden">
+          {links.map((e, i) => (
+            <Link key={i} href={e.href} className=" py-1 pl-5 ">
+              {e.label}
+            </Link>
+          ))}
+        </section>
+      )}
     </>
   );
 }
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }) {
+  useEffect(() => {
+    useDashboardInfo.persist.rehydrate()
+  }, [])
+
   return (
     <html lang="en">
       <body

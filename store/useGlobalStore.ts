@@ -1,7 +1,7 @@
 //@ts-nocheck
 
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
+import { persist, createJSONStorage } from "zustand/middleware";
 type useIsOpen = {
   isMenuOpen: boolean;
   setMenuOpen: (value: boolean) => void;
@@ -16,9 +16,12 @@ export const useIsOpen = create<useIsOpen>((set) => ({
 
   isAddNewTab: false,
   setAddNewTab: (value) => set({ isAddNewTab: value }),
+
+  isTabMenu: false,
+  setIsTabMenu: (value) => set({ isTabMenu: value }),
 }));
 
-export type DashboardInfo = {
+export type DashboardInfoType = {
   id: number;
   name: string;
   currentProgress: number;
@@ -30,9 +33,9 @@ export type DashboardInfo = {
 };
 
 type useDashboardInfo = {
-  dashboardInfo: DashboardInfo[];
+  dashboardInfo: DashboardInfoType[];
   setDashboardInfo: (newItem: DashboardItem) => void;
-  increaseProgress: (updatedItem: DashboardInfo) => void;
+  increaseProgress: (updatedItem: DashboardInfoType) => void;
 };
 export const useDashboardInfo = create<useDashboardInfo>()(
   persist(
@@ -40,7 +43,7 @@ export const useDashboardInfo = create<useDashboardInfo>()(
       dashboardInfo: [
         {
           id: 1,
-          name: "Tracker 1",
+          name: "Drink Water",
           currentProgress: 2,
           maxProgress: 3,
           totalCompletion: 0,
@@ -52,10 +55,11 @@ export const useDashboardInfo = create<useDashboardInfo>()(
             { time: "1/2/3" },
           ],
           completionAnimation: false,
+          description: "Drink water every 30 minutes, 8 cups total per day",
         },
         {
           id: 2,
-          name: "Tracker 2",
+          name: "Screen BreakTime",
           currentProgress: 0,
           maxProgress: 5,
           totalCompletion: 0,
@@ -67,6 +71,8 @@ export const useDashboardInfo = create<useDashboardInfo>()(
             { time: "1/2/3" },
           ],
           completionAnimation: false,
+          description:
+            "Step away from the screen every hour for at least 5 minutes",
         },
       ],
       setDashboardInfo: (newItem) =>
@@ -79,9 +85,17 @@ export const useDashboardInfo = create<useDashboardInfo>()(
             item.id === updatedItem.id ? updatedItem : item,
           ),
         })),
+      updateDashboardItem: (updatedItem) =>
+        set((state) => ({
+          dashboardInfo: state.dashboardInfo.map((item) =>
+            item.id === updatedItem.id ? { ...item, ...updatedItem } : item,
+          ),
+        })),
     }),
     {
       name: "dashboard-info",
+      storage: createJSONStorage(() => typeof window !== 'undefined' ? localStorage : sessionStorage),
+      skipHydration: true,
     },
   ),
 );
@@ -94,4 +108,14 @@ type useActiveTab = {
 export const useActiveTab = create<useActiveTab>((set) => ({
   activeTab: 1,
   setActiveTab: (val) => set({ activeTab: val }),
+}));
+
+type useTabNumber = {
+  tabNumber: number[];
+  setTabNumber: (val: number[]) => void;
+};
+
+export const useTabNumber = create<useTabNumber>((set) => ({
+  tabNumber: [0, 1],
+  setTabNumber: (val) => set({ tabNumber: val }),
 }));

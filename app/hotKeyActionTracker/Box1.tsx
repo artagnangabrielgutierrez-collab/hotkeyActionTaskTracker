@@ -39,7 +39,7 @@ export default function Box1({
         transition-shadow duration-300"
       >
         {/* Progress pill */}
-        <div className="relative flex flex-row items-center justify-center w-[60%] px-4 py-4 mt-4 mx-auto rounded-full border border-[#1d4ed8]/50 bg-[#000d1f]/50 z-10">
+        <div className="relative flex flex-row items-center justify-center w-[50%] px-1 py-1 mt-4 mx-auto rounded-full border border-[#1d4ed8]/50 bg-[#000d1f]/50 z-10">
           <span className="font-bold text-[#bfdbfe] text-[1em] xl:text-[1.5em]">
             {currentProgress}
           </span>
