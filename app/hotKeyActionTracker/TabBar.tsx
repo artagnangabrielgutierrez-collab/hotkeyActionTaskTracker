@@ -7,7 +7,7 @@ import {
   useTabNumber,
   DashboardInfoType,
 } from "@/store/useGlobalStore";
-import { Zap, Award, Menu } from "lucide-react";
+import { Award, Menu } from "lucide-react";
 
 export default function TabBar() {
   const tabName = useDashboardInfo((state) => state.dashboardInfo);
@@ -36,7 +36,7 @@ export default function TabBar() {
 
   function viewPrevTabs() {
     setTabNumber([tabNumber[0] - 1, tabNumber[1] - 1]);
-    if (isMobile) setActiveTab(activeTab);
+    if (isMobile) setActiveTab(activeTab - 1);
   }
 
   function viewNextTabs() {
@@ -45,8 +45,8 @@ export default function TabBar() {
   }
   return (
     <>
-      <div className="flex flex-col bg-[#13131f] pt-3">
-        <div className="flex flex-row gap- px-3 gap-4">
+      <section className="flex flex-col bg-[#13131f]  pt-3 flex-wrap ">
+        <div className="flex flex-row gap- px-3 gap-4 flex-wrap">
           <button
             className=" text-center my-auto "
             onClick={() => viewPrevTabs()}
@@ -54,28 +54,30 @@ export default function TabBar() {
           >
             &lt; {/* < */}
           </button>
-          {tabName.slice(tabNumber[0], tabNumber[1] + maxTabs).map((tab: {id: number, name: string}) => {
-            const isActive = tab.id === activeTab;
-            return (
-              <section key={tab.id}>
-                <div className="pr-">
-                  <button
-                    key={tab.id}
-                    onClick={() => setActiveTab(tab.id)}
-                    data-active={isActive}
-                    className="relative flex items-center gap-1 px-4 py-2   transition-all duration-200 rounded-t-md cursor-pointer border-none
+          {tabName
+            .slice(tabNumber[0], tabNumber[1] + maxTabs)
+            .map((tab: { id: number; name: string }) => {
+              const isActive = tab.id === activeTab;
+              return (
+                <section key={tab.id}>
+                  <div className="pr-">
+                    <button
+                      key={tab.id}
+                      onClick={() => setActiveTab(tab.id)}
+                      data-active={isActive}
+                      className="relative flex items-center gap-1 px-4 py-2   transition-all duration-200 rounded-t-md cursor-pointer border-none
                bg-slate-900 text-slate-500 hover:text-slate-300 data-[active=true]:bg-slate-800 data-[active=true]:text-slate-100 w-35"
-                  >
-                    {/*<span className=" opacity-70">{tab.icon}</span>*/}
-                    <span className="font-medium truncate">{tab.name}</span>
-                  </button>
-                </div>
-                <div
-                  className={`w-full h-[0.40rem] ${isActive ? "bg-indigo-500" : ""} rounded-t-2xl z-1`}
-                />
-              </section>
-            );
-          })}
+                    >
+                      {/*<span className=" opacity-70">{tab.icon}</span>*/}
+                      <span className="font-medium truncate">{tab.name}</span>
+                    </button>
+                  </div>
+                  <div
+                    className={`w-full h-[0.40rem] ${isActive ? "bg-indigo-500" : ""}  z-1`}
+                  />
+                </section>
+              );
+            })}
           <button
             className=" text-center my-auto"
             onClick={() => setAddNewTab(true)}
@@ -129,7 +131,7 @@ export default function TabBar() {
         </div>
 
         <div className="w-full p-1 h-1 bg-indigo-500"></div>
-      </div>
+      </section>
       {isTabMenu && (
         <div className="flex flex-col bg-black border border-white/10 overflow-hidden w-full right-0 bottom-auto z-15">
           <button

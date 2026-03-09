@@ -4,6 +4,7 @@ import {
   useActiveTab,
   useIsOpen,
   DashboardInfoType,
+  useTabNumber,
 } from "@/store/useGlobalStore";
 import AddNewTab from "./AddNewTab";
 import Box1 from "./Box1";
@@ -15,6 +16,7 @@ import TabBar from "./TabBar";
 
 export default function HotKeyActionTracker() {
   const dashboardInfo = useDashboardInfo((state) => state.dashboardInfo);
+  const setDashboardInfo = useDashboardInfo((state) => state.setDashboardInfo);
   const updateDashboardItem = useDashboardInfo(
     (state) => state.updateDashboardItem,
   );
@@ -25,10 +27,11 @@ export default function HotKeyActionTracker() {
   );
 
   const isAddNewTab = useIsOpen((state) => state.isAddNewTab);
-
+  const setTabNumber = useTabNumber((state) => state.setTabNumber);
+  
   return (
     <section className="min-h-[90vh] pb-6 ">
-      {isAddNewTab && <AddNewTab />}
+      {isAddNewTab && <AddNewTab dashboardInfo={dashboardInfo} setDashboardInfo={setDashboardInfo}/>}
 
       <TabBar />
       <div className="grid grid-cols-2 grid-rows-3 gap-4 h-90 md:h-110 px-4 pt-4 xl:max-w-[75%] mx-auto pb-4 my-auto ">
@@ -48,6 +51,8 @@ export default function HotKeyActionTracker() {
             dashboardInfo={dashboardInfo}
             activeTab={activeTab}
             setActiveTab={setActiveTab}
+            setTabNumber={setTabNumber}
+            
           />
         </div>
         <div className="col-start-1 row-start-3 row-span-2 ">
@@ -64,6 +69,7 @@ export default function HotKeyActionTracker() {
             dashboardInfo={dashboardInfo}
             activeTab={activeTab}
             setActiveTab={setActiveTab}
+            setTabNumber={setTabNumber}
           />
         </div>
       </div>

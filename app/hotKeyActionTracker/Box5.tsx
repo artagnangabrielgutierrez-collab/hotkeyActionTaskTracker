@@ -8,12 +8,29 @@ import {
 interface TaskCardProps {
   dashboardInfoItems: DashboardInfoType;
   setActiveTab: (val: number) => void;
+  setTabNumber: any; //temp
 }
 
-function TaskCard({ dashboardInfoItems, setActiveTab }: TaskCardProps) {
-  const { id, name, hotkey, totalCompletion } = dashboardInfoItems;
+function TaskCard({
+  dashboardInfoItems,
+  setActiveTab,
+  setTabNumber,
+}: TaskCardProps) {
+  const { id, name, hotkey, currentProgress, maxProgress } = dashboardInfoItems;
+  const tabNumber = useTabNumber((state) => state.tabNumber);
+  const activeTab = useActiveTab((state) => state.activeTab);
   function switchTab() {
     setActiveTab(id);
+    console.log(id);
+
+    if (activeTab < id) {
+      setTabNumber([tabNumber[0] + id - 1, tabNumber[1] + id - 1]);
+    }
+    if (activeTab > id) {
+      setTabNumber([tabNumber[0] - id, tabNumber[1] - id]);
+    }
+
+    //N: improve (maybe) the condition later ,must be mobile only for the 2 if
   }
 
   return (
@@ -35,22 +52,24 @@ transition-shadow duration-300"
       </div>
       <div className="flex items-center gap-2 px-2">
         <span className="text-[#93c5fd]">Progress:</span>
-        <span className="font-semibold text-[#60a5fa]">{totalCompletion}</span>
+        <span className="font-semibold text-[#60a5fa]">{currentProgress} / {maxProgress}</span>
       </div>
     </div>
   );
 }
 
 interface Box5Props {
-  dashboardInfo: DashboardInfoType;
+  dashboardInfo: DashboardInfoType[];
   activeTab: number;
   setActiveTab: (val: number) => void;
+  setTabNumber: any; //temp
 }
 
 export default function Box5({
   dashboardInfo,
   activeTab,
   setActiveTab,
+  setTabNumber,
 }: Box5Props) {
   return (
     <div
@@ -72,6 +91,7 @@ transition-shadow duration-300"
                   key={e.id}
                   dashboardInfoItems={e}
                   setActiveTab={setActiveTab}
+                  setTabNumber={setTabNumber}
                 />
               ))}
           </div>

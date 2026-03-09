@@ -60,20 +60,32 @@ export default function Box4({
   else if (progressPercentage <= 75) motivationalQuote = "Keep pushing!";
   else if (progressPercentage <= 99) motivationalQuote = "Almost there!";
   else motivationalQuote = "Finished!!!";
-
+  {
+    /* Add more functionality to these */
+  }
   function decreaseCurrent() {
+    if (currentProgress <= 1) return;
     updateDashboardItem(id, { currentProgress: currentProgress - 1 });
   }
 
   function increaseCurrent() {
+    if (currentProgress >= 99) {
+      console.error("Max current progress is 99");
+      return;
+    }
     updateDashboardItem(id, { currentProgress: currentProgress + 1 });
   }
 
   function decreaseMax() {
+    if (maxProgress <= 1 || currentProgress >= maxProgress) return;
     updateDashboardItem(id, { maxProgress: maxProgress - 1 });
   }
 
   function increasemax() {
+    if (currentProgress >= 99) {
+      console.error(" Max progress is up to 99 only");
+      return;
+    }
     updateDashboardItem(id, { maxProgress: maxProgress + 1 });
   }
 

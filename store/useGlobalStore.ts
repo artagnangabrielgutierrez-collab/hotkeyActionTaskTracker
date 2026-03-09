@@ -83,7 +83,7 @@ export const useDashboardInfo = create<useDashboardInfo>()(
             "Step away from the screen every hour for at least 5 minutes",
         },
       ],
-      setDashboardInfo: (newItem) =>
+      setDashboardInfo: (newItem) => //for adding new tab only 
         set((state) => ({
           dashboardInfo: [...state.dashboardInfo, newItem],
         })),
