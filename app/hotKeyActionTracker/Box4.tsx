@@ -3,6 +3,7 @@ import {
   useDashboardInfo,
   DashboardInfoType,
   useDashboardInfoType,
+  useIsOpen,
 } from "@/store/useGlobalStore";
 type updateDashboardItem = useDashboardInfoType["updateDashboardItem"];
 
@@ -52,6 +53,8 @@ export default function Box4({
   const { id, name, currentProgress, maxProgress, description } =
     currentDashboardInfo;
   const progressPercentage = Math.round((currentProgress / maxProgress) * 100);
+  const isDescriptionEdit = useIsOpen((state) => state.isDescriptionEdit);
+  const setIsDescriptionEdit = useIsOpen((state) => state.setIsDescriptionEdit);
 
   let motivationalQuote = undefined;
 
@@ -64,7 +67,10 @@ export default function Box4({
     /* Add more functionality to these */
   }
   function decreaseCurrent() {
-    if (currentProgress <= 1) return;
+    if (currentProgress <= 0) {
+      console.error("Cant be lower than 1");
+      return;
+    }
     updateDashboardItem(id, { currentProgress: currentProgress - 1 });
   }
 
@@ -73,11 +79,18 @@ export default function Box4({
       console.error("Max current progress is 99");
       return;
     }
+    if (currentProgress + 1 >= maxProgress) {
+      console.error("current progress cant be higher or equal to max progress");
+      return;
+    }
     updateDashboardItem(id, { currentProgress: currentProgress + 1 });
   }
 
   function decreaseMax() {
-    if (maxProgress <= 1 || currentProgress >= maxProgress) return;
+    if (maxProgress <= 1 || currentProgress >= maxProgress - 1) {
+      console.error("Error");
+      return;
+    }
     updateDashboardItem(id, { maxProgress: maxProgress - 1 });
   }
 
@@ -100,7 +113,7 @@ export default function Box4({
 
         <hr className="w-[99%] mx-auto border-[#3b82f6] mt-1" />
         {/**/}
-        <div className="bg-[#00040f] border border-[#1d4ed8] rounded-md p-4 mt-2 flex-1 w-full gap-4 pb-5 pt-4 flex flex-col">
+        <div className="bg-[#00040f] border border-[#1d4ed8] rounded-md p-4 mt-2 flex-1 w-full gap-4 pb-5 pt-4 flex flex-col overflow-auto">
           {/**/}
 
           <div className="flex flex-row items-center gap-4 justify-start">
@@ -126,6 +139,7 @@ export default function Box4({
               <div
                 className="bg-[#000d1f] border border-[#1d4ed8] rounded-lg text-[#bfdbfe] p-3 flex flex-col text-center w-full hover:shadow-[0_4px_12px_2px_rgba(192,192,192,0.3),4px_0_8px_0px_rgba(192,192,192,0.15),-4px_0_8px_0px_rgba(192,192,192,0.15)]
 transition-shadow duration-300"
+onClick={() => setIsDescriptionEdit(true)}
               >
                 <p className="text-xs line-clamp-2">{description}</p>
               </div>

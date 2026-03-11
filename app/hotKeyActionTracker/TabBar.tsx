@@ -21,6 +21,7 @@ export default function TabBar() {
 
   const [maxTabs, setMaxTabs] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
+
   useEffect(() => {
     function update() {
       setMaxTabs(
@@ -41,8 +42,19 @@ export default function TabBar() {
 
   function viewNextTabs() {
     setTabNumber([tabNumber[0] + 1, tabNumber[1] + 1]);
-    if (isMobile) setActiveTab(activeTab + 1);
+    if (isMobile) {
+      setActiveTab(activeTab + 1);
+    }
   }
+
+  function dropdownMenuTabChange(id: number) {
+    setActiveTab(id);
+
+    if (isMobile) {
+      setTabNumber([id - 1, id]);
+    }
+  }
+
   return (
     <>
       <section className="flex flex-col bg-[#13131f]  pt-3 flex-wrap ">
@@ -108,12 +120,6 @@ export default function TabBar() {
               </span>
             </div> */}{" "}
               {/* Achievements,i might add it later */}
-              <div className="flex items-center gap-1 px-2  py-1  rounded-lg border border-purple-500/30 bg-linear-to-r from-purple-500/20 to-pink-500/20 hover:from-purple-500/30 hover:to-pink-500/30 transition-all ml-auto">
-                <Award className="w-3 h-3  text-purple-400" />
-                <span className="text-xs font-semibold text-purple-300">
-                  Total
-                </span>
-              </div>
               <button
                 onClick={() => {
                   localStorage.clear();
@@ -132,6 +138,9 @@ export default function TabBar() {
 
         <div className="w-full p-1 h-1 bg-indigo-500"></div>
       </section>
+
+      {/* Task Menu dropdown  */}
+
       {isTabMenu && (
         <div className="flex flex-col bg-black border border-white/10 overflow-hidden w-full right-0 bottom-auto z-15">
           <button
@@ -144,6 +153,7 @@ export default function TabBar() {
             <div
               key={e.id}
               className="px-4 py-2.5 text-sm text-white/70 hover:text-white hover:bg-white/10 cursor-pointer border-b border-white/5 last:border-none transition-colors font-medium"
+              onClick={() => dropdownMenuTabChange(e.id)}
             >
               <span className="text-white/30 text-xs mr-2">{e.id}</span>
               {e.name}

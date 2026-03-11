@@ -1,7 +1,15 @@
 "use client";
 import { useForm } from "react-hook-form";
 import { useIsOpen } from "@/store/useGlobalStore";
-{/* 70% AI because this is only a prototype, fix later */}
+import { DashboardInfoType } from "@/store/useGlobalStore";
+{
+  /* 70% AI because this is only a prototype, fix later, not complete*/
+}
+type AddNewTabProps = {
+  dashboardInfo: DashboardInfoType[];
+  setDashboardInfo: (val: DashboardInfoType) => void;
+};
+
 type formInput = {
   name: string;
   maxProgress: number;
@@ -20,16 +28,26 @@ const PLACEHOLDER_DATA = {
   hotkey2: "2",
 };
 
-export default function AddNewTab({ dashboardInfo, setDashboardInfo }: AddNewTabProps) {
+export default function AddNewTab({
+  dashboardInfo,
+  setDashboardInfo,
+}: AddNewTabProps) {
   const setAddNewTab = useIsOpen((state) => state.setAddNewTab);
-  const { register, handleSubmit, reset, watch, setValue, formState: { errors } } = useForm<formInput>();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    watch,
+    setValue,
+    formState: { errors },
+  } = useForm<formInput>();
 
   const hotkey1 = watch("hotkey1");
   const hotkey2 = watch("hotkey2");
 
   function fillPlaceholder() {
     Object.entries(PLACEHOLDER_DATA).forEach(([key, val]) =>
-      setValue(key as keyof formInput, val, { shouldValidate: true })
+      setValue(key as keyof formInput, val, { shouldValidate: true }),
     );
   }
 
@@ -75,7 +93,10 @@ export default function AddNewTab({ dashboardInfo, setDashboardInfo }: AddNewTab
         </div>
 
         <div className="p-6">
-          <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className="flex flex-col gap-4"
+          >
             <input
               {...register("name", { required: true })}
               placeholder="Name"
@@ -91,14 +112,18 @@ export default function AddNewTab({ dashboardInfo, setDashboardInfo }: AddNewTab
                 {...register("maxProgress", { required: true })}
                 type="number"
                 placeholder="Completions required (e.g. 5)"
-                onKeyDown={(e) => ["ArrowUp", "ArrowDown"].includes(e.key) && e.preventDefault()}
+                onKeyDown={(e) =>
+                  ["ArrowUp", "ArrowDown"].includes(e.key) && e.preventDefault()
+                }
                 className={`rounded-lg border border-[#334155] bg-[#020617] px-4 py-2 text-slate-100 outline-none w-full [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none ${errors.maxProgress ? errorClass : ""}`}
               />
               <input
                 {...register("maxCompletion", { required: true })}
                 type="number"
                 placeholder="Max completions (e.g. 10)"
-                onKeyDown={(e) => ["ArrowUp", "ArrowDown"].includes(e.key) && e.preventDefault()}
+                onKeyDown={(e) =>
+                  ["ArrowUp", "ArrowDown"].includes(e.key) && e.preventDefault()
+                }
                 className={`rounded-lg border border-[#334155] bg-[#020617] px-4 py-2 text-slate-100 outline-none w-full [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none ${errors.maxCompletion ? errorClass : ""}`}
               />
             </div>

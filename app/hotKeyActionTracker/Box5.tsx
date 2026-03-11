@@ -1,36 +1,43 @@
+"use client";
+import { useEffect, useState } from "react";
 import {
-  useDashboardInfo,
   useActiveTab,
   useTabNumber,
   DashboardInfoType,
 } from "@/store/useGlobalStore";
 
 interface TaskCardProps {
-  dashboardInfoItems: DashboardInfoType;
+  dashboardInfo: DashboardInfoType;
   setActiveTab: (val: number) => void;
   setTabNumber: any; //temp
 }
 
 function TaskCard({
-  dashboardInfoItems,
+  dashboardInfo,
   setActiveTab,
   setTabNumber,
 }: TaskCardProps) {
-  const { id, name, hotkey, currentProgress, maxProgress } = dashboardInfoItems;
+  const { id, name, hotkey, currentProgress, maxProgress } = dashboardInfo;
   const tabNumber = useTabNumber((state) => state.tabNumber);
   const activeTab = useActiveTab((state) => state.activeTab);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    function update() {
+      if (window.innerWidth <= 764) setIsMobile(true);
+      else setIsMobile(false);
+    }
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, []);
+
   function switchTab() {
     setActiveTab(id);
-    console.log(id);
-
-    if (activeTab < id) {
-      setTabNumber([tabNumber[0] + id - 1, tabNumber[1] + id - 1]);
+    console.log(tabNumber[0], tabNumber[1]);
+    if (isMobile) {
+      setTabNumber([id - 1, id]);
     }
-    if (activeTab > id) {
-      setTabNumber([tabNumber[0] - id, tabNumber[1] - id]);
-    }
-
-    //N: improve (maybe) the condition later ,must be mobile only for the 2 if
   }
 
   return (
@@ -52,7 +59,9 @@ transition-shadow duration-300"
       </div>
       <div className="flex items-center gap-2 px-2">
         <span className="text-[#93c5fd]">Progress:</span>
-        <span className="font-semibold text-[#60a5fa]">{currentProgress} / {maxProgress}</span>
+        <span className="font-semibold text-[#60a5fa]">
+          {currentProgress} / {maxProgress}
+        </span>
       </div>
     </div>
   );
@@ -89,7 +98,7 @@ transition-shadow duration-300"
               .map((e, i) => (
                 <TaskCard
                   key={e.id}
-                  dashboardInfoItems={e}
+                  dashboardInfo={e}
                   setActiveTab={setActiveTab}
                   setTabNumber={setTabNumber}
                 />

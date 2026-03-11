@@ -1,8 +1,11 @@
+"use client";
+import { useEffect } from "react";
+
 import {
   DashboardInfoType,
   useDashboardInfoType,
 } from "@/store/useGlobalStore";
-
+import { Award } from "lucide-react";
 type updateDashboardItem = useDashboardInfoType["updateDashboardItem"];
 
 interface Box1Props {
@@ -13,18 +16,27 @@ interface Box1Props {
 export default function Box1({
   currentDashboardInfo,
   updateDashboardItem,
+  dashboardInfo,
 }: Box1Props) {
   if (!currentDashboardInfo) return;
-  const { id, currentProgress, maxProgress } = currentDashboardInfo;
+  // prettier-ignore
+  const { id, currentProgress, maxProgress, totalCompletion, completionHistoryDate, completionAnimation } = currentDashboardInfo;
   const percentage = Math.min(
     Math.round((currentProgress / maxProgress) * 100),
     100,
   );
 
-  function handleIncrease() {
-    if (currentProgress + 1 > maxProgress) return null; //i might change "1" in the future
+  function handleManualIncrease() {
     updateDashboardItem(id, { currentProgress: currentProgress + 1 });
+    if (currentProgress + 1 === maxProgress) {
+      updateDashboardItem(id, {
+        currentProgress: 0,
+        totalCompletion: totalCompletion + 1,
+      });
+    }
   }
+
+
 
   return (
     <div
@@ -38,18 +50,23 @@ export default function Box1({
         transition-shadow duration-300"
       >
         {/* Progress pill */}
-        <div className="relative flex flex-row items-center justify-center w-[50%] px-1 py-1 mt-4 mx-auto rounded-full border border-[#1d4ed8]/50 bg-[#000d1f]/50 z-10">
-          <span className="font-bold text-[#bfdbfe] text-[1em] xl:text-[1.5em]">
-            {currentProgress}
-          </span>
-          <span className="mx-2 text-[#3b82f6] text-[1em] xl:text-[1.5em]">
-            /
-          </span>
-          <span className="font-bold text-[#3b82f6] text-[1em] xl:text-[1.5em]">
-            {maxProgress}
-          </span>
+        <div className="flex justify-center gap-4">
+          <div className="relative flex flex-row items-center justify-center w-[50%] px-1 py-1 mt-4  rounded-full border border-[#1d4ed8]/50 bg-[#000d1f]/50 z-10">
+            <span className="font-bold text-[#bfdbfe] text-[1em] xl:text-[1.5em]">
+              {currentProgress}
+            </span>
+            <span className="mx-2 text-[#3b82f6] text-[1em] xl:text-[1.5em]">
+              /
+            </span>
+            <span className="font-bold text-[#3b82f6] text-[1em] xl:text-[1.5em]">
+              {maxProgress}
+            </span>
+          </div>
+          <div className="text-sm relative flex flex-row items-center justify-center  px-1 py-1 mt-4 min-w-15 rounded-sm border border-[#1d4ed8]/50 bg-[#000d1f]/50 z-10">
+            <Award className="w-3 h-3  text-purple-400" />
+            {totalCompletion}
+          </div>
         </div>
-
         {/* Water fill */}
         <div
           className="absolute bottom-0 left-0 right-0 transition-all duration-500 ease-out bg-linear-to-r from-[#1d4ed8] to-[#3b82f6]"
@@ -57,19 +74,17 @@ export default function Box1({
         >
           <div className="absolute inset-0 bg-linear-to-t from-[#3b82f6]/30 to-transparent" />
         </div>
-
         {/* Percentage */}
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
           <span className="font-bold text-[#bfdbfe] drop-shadow-lg text-[2em] xl:text-[2.0em]">
             {percentage}%
           </span>
         </div>
-
         {/* Increase button */}
         <div className="absolute bottom-4 left-0 right-0 flex justify-center z-10">
           <button
             className="px-4 py-2 font-semibold text-[#bfdbfe] rounded-lg border border-[#3b82f6] shadow-lg transition-all duration-300 transform bg-linear-to-r from-[#1d4ed8] to-[#3b82f6] hover:from-[#2563eb] hover:to-[#60a5fa] hover:shadow-[#3b82f6]/50 hover:scale-105 text-[1em] xl:text-[1.5em]"
-            onClick={handleIncrease}
+            onClick={handleManualIncrease}
           >
             Increase
           </button>

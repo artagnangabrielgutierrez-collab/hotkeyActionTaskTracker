@@ -22,6 +22,12 @@ export const useIsOpen = create<useIsOpen>((set) => ({
 
   isTabMenu: false,
   setIsTabMenu: (value) => set({ isTabMenu: value }),
+
+  isHotkeyEdit: false,
+  setIsHotkeyEdit: (value) => set({ isHotkeyEdit: value }),
+
+  isDescriptionEdit: false,
+  setIsDescriptionEdit: (value) => set({ isDescriptionEdit: value }),
 }));
 
 export type DashboardInfoType = {
@@ -52,10 +58,10 @@ export const useDashboardInfo = create<useDashboardInfo>()(
         {
           id: 1,
           name: "Drink Water",
-          currentProgress: 2,
+          currentProgress: 1,
           maxProgress: 3,
           totalCompletion: 0,
-          hotkey: "F+1",
+          hotkey: "Q",
           completionHistoryDate: [
             { time: "1/2/3" },
             { time: "1/2/3" },
@@ -71,7 +77,7 @@ export const useDashboardInfo = create<useDashboardInfo>()(
           currentProgress: 0,
           maxProgress: 5,
           totalCompletion: 0,
-          hotkey: "F+2",
+          hotkey: "E",
           completionHistoryDate: [
             { time: "1/2/3" },
             { time: "1/2/3" },
@@ -82,8 +88,26 @@ export const useDashboardInfo = create<useDashboardInfo>()(
           description:
             "Step away from the screen every hour for at least 5 minutes",
         },
+        {
+          id: 3,
+          name: "Walk for 5 minutes",
+          currentProgress: 0,
+          maxProgress: 3,
+          totalCompletion: 0,
+          hotkey: "W",
+          completionHistoryDate: [
+            { time: "1/2/3" },
+            { time: "1/2/3" },
+            { time: "1/2/3" },
+            { time: "1/2/3" },
+          ],
+          completionAnimation: false,
+          description: "Walk for 5 minutes per 1 hour",
+        },
       ],
-      setDashboardInfo: (newItem) => //for adding new tab only 
+      setDashboardInfo: (
+        newItem, //for adding new tab only
+      ) =>
         set((state) => ({
           dashboardInfo: [...state.dashboardInfo, newItem],
         })),
@@ -110,12 +134,12 @@ export const useActiveTab = create<useActiveTab>((set) => ({
   setActiveTab: (val) => set({ activeTab: val }),
 }));
 
-type useTabNumber = {
+type useTabNumberProps = {
   tabNumber: number[];
   setTabNumber: (val: number[]) => void;
 };
 
-export const useTabNumber = create<useTabNumber>((set) => ({
+export const useTabNumber = create<useTabNumberProps>((set) => ({
   tabNumber: [0, 1],
   setTabNumber: (val) => set({ tabNumber: val }),
 }));

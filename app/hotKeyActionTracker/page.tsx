@@ -13,7 +13,8 @@ import Box3 from "./Box3";
 import Box4 from "./Box4";
 import Box5 from "./Box5";
 import TabBar from "./TabBar";
-
+import EditHotkey from "./EditHotkey";
+import EditDescription from "./EditDescription";
 export default function HotKeyActionTracker() {
   const dashboardInfo = useDashboardInfo((state) => state.dashboardInfo);
   const setDashboardInfo = useDashboardInfo((state) => state.setDashboardInfo);
@@ -26,21 +27,55 @@ export default function HotKeyActionTracker() {
     (item: DashboardInfoType) => item.id === activeTab,
   );
 
-  const isAddNewTab = useIsOpen((state) => state.isAddNewTab);
   const setTabNumber = useTabNumber((state) => state.setTabNumber);
-  
+  {
+    /* Conditional Components boolean */
+  }
+  const isAddNewTab = useIsOpen((state) => state.isAddNewTab);
+  const isHotkeyEdit = useIsOpen((state) => state.isHotkeyEdit);
+  const isDescriptionEdit = useIsOpen((state) => state.isDescriptionEdit);
+
+  if (!currentDashboardInfo) {
+    //Error handling for currentDashboardInfo (there are some weird scenarios user can do and will result in err)
+    setActiveTab(1);
+    setTabNumber([0, 1]);
+  }
+
   return (
     <section className="min-h-[90vh] pb-6 ">
-      {isAddNewTab && <AddNewTab dashboardInfo={dashboardInfo} setDashboardInfo={setDashboardInfo}/>}
+      {/* Conditional Components */}
+      {isDescriptionEdit && (
+        <EditDescription
+          currentDashboardInfo={currentDashboardInfo}
+          updateDashboardItem={updateDashboardItem}
+        />
+      )}
+
+      {isHotkeyEdit && (
+        <EditHotkey
+          currentDashboardInfo={currentDashboardInfo}
+          updateDashboardItem={updateDashboardItem}
+        />
+      )}
+
+      {isAddNewTab && (
+        <AddNewTab
+          dashboardInfo={dashboardInfo}
+          setDashboardInfo={setDashboardInfo}
+        />
+      )}
+      {/* Conditional Components End*/}
 
       <TabBar />
-      <div className="grid grid-cols-2 grid-rows-3 gap-4 h-90 md:h-110 px-4 pt-4 xl:max-w-[75%] mx-auto pb-4 my-auto ">
-        {" "}
-        {/* "h" controls Grid sizing  */}
+      <div
+        className="grid grid-cols-2 grid-rows-3 gap-4 h-90 md:h-110 px-4 pt-4 xl:max-w-[75%] mx-auto pb-4 my-auto "
+        data-dashboard="Whole Dashboard Compiled"
+      >
         <div className="col-start-1 row-start-1 row-span-2">
           <Box1
             currentDashboardInfo={currentDashboardInfo}
             updateDashboardItem={updateDashboardItem}
+            dashboardInfo={dashboardInfo}
           />
         </div>
         <div className="col-start-2 row-start-1 row-span-4 md:row-span-1">
@@ -52,7 +87,6 @@ export default function HotKeyActionTracker() {
             activeTab={activeTab}
             setActiveTab={setActiveTab}
             setTabNumber={setTabNumber}
-            
           />
         </div>
         <div className="col-start-1 row-start-3 row-span-2 ">
@@ -70,6 +104,7 @@ export default function HotKeyActionTracker() {
             activeTab={activeTab}
             setActiveTab={setActiveTab}
             setTabNumber={setTabNumber}
+            updateDashboardItem={updateDashboardItem}
           />
         </div>
       </div>
