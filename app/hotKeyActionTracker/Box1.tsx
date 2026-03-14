@@ -25,6 +25,7 @@ export default function Box1({
     Math.round((currentProgress / maxProgress) * 100),
     100,
   );
+  
   const dashboardInfo = useDashboardInfo((state) => state.dashboardInfo); //for debugging only
   function handleManualIncrease() {
     updateDashboardItem(id, { currentProgress: currentProgress + 1 });
@@ -34,7 +35,6 @@ export default function Box1({
         totalCompletion: totalCompletion + 1,
       });
     }
-    console.log(dashboardInfo);
   }
 
   //this is temp, move later

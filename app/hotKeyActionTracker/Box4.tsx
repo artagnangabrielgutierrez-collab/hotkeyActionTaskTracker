@@ -1,4 +1,5 @@
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useReducer, useEffect } from "react";
 import {
   useDashboardInfo,
   DashboardInfoType,
@@ -32,12 +33,10 @@ function SideArrow({
 transition-shadow duration-300"
     >
       <div className="flex flex-row justify-center items-center gap-2 ">
-        {/* left arrow */}
         <button className={btnCls} onClick={leftArrowClick}>
           <ChevronLeft size={16} strokeWidth={2.5} />
         </button>
         <span className={valueCls}>{value}</span>
-        {/* rigth arrow */}
         <button className={btnCls} onClick={rightArrowClick}>
           <ChevronRight size={16} strokeWidth={2.5} />
         </button>
@@ -45,6 +44,41 @@ transition-shadow duration-300"
     </div>
   );
 }
+interface State {
+  currentProgress: number;
+  maxProgress: number;
+}
+
+type Action =
+  | { type: "DECREASE_CURRENT" }
+  | { type: "INCREASE_CURRENT" }
+  | { type: "DECREASE_MAX" }
+  | { type: "INCREASE_MAX" };
+
+const reducer = (state: State, action: Action): State => {
+  switch (action.type) {
+    case "DECREASE_CURRENT":
+      if (state.currentProgress <= 0) return state;
+      if (state.currentProgress - 1 >= state.maxProgress) return state;
+      return { ...state, currentProgress: state.currentProgress - 1 };
+    case "INCREASE_CURRENT":
+      if (state.currentProgress >= 99) return state;
+      if (state.currentProgress + 1 >= state.maxProgress) return state;
+      return { ...state, currentProgress: state.currentProgress + 1 };
+    case "DECREASE_MAX":
+      if (
+        state.maxProgress <= 1 ||
+        state.currentProgress >= state.maxProgress - 1
+      )
+        return state;
+      return { ...state, maxProgress: state.maxProgress - 1 };
+    case "INCREASE_MAX":
+      if (state.currentProgress >= 99) return state;
+      return { ...state, maxProgress: state.maxProgress + 1 };
+    default:
+      return state;
+  }
+};
 
 export default function Box4({
   currentDashboardInfo,
@@ -52,7 +86,15 @@ export default function Box4({
 }: Box4Props) {
   const { id, name, currentProgress, maxProgress, description } =
     currentDashboardInfo;
-  const progressPercentage = Math.round((currentProgress / maxProgress) * 100);
+
+  const [state, dispatch] = useReducer(reducer, {
+    currentProgress,
+    maxProgress,
+  });
+
+  const progressPercentage = Math.round(
+    (state.currentProgress / state.maxProgress) * 100,
+  );
   const isDescriptionEdit = useIsOpen((state) => state.isDescriptionEdit);
   const setIsDescriptionEdit = useIsOpen((state) => state.setIsDescriptionEdit);
 
@@ -63,44 +105,6 @@ export default function Box4({
   else if (progressPercentage <= 75) motivationalQuote = "Keep pushing!";
   else if (progressPercentage <= 99) motivationalQuote = "Almost there!";
   else motivationalQuote = "Finished!!!";
-  {
-    /* Add more functionality to these */
-  }
-  function decreaseCurrent() {
-    if (currentProgress <= 0) {
-      console.error("Cant be lower than 1");
-      return;
-    }
-    updateDashboardItem(id, { currentProgress: currentProgress - 1 });
-  }
-
-  function increaseCurrent() {
-    if (currentProgress >= 99) {
-      console.error("Max current progress is 99");
-      return;
-    }
-    if (currentProgress + 1 >= maxProgress) {
-      console.error("current progress cant be higher or equal to max progress");
-      return;
-    }
-    updateDashboardItem(id, { currentProgress: currentProgress + 1 });
-  }
-
-  function decreaseMax() {
-    if (maxProgress <= 1 || currentProgress >= maxProgress - 1) {
-      console.error("Error");
-      return;
-    }
-    updateDashboardItem(id, { maxProgress: maxProgress - 1 });
-  }
-
-  function increasemax() {
-    if (currentProgress >= 99) {
-      console.error(" Max progress is up to 99 only");
-      return;
-    }
-    updateDashboardItem(id, { maxProgress: maxProgress + 1 });
-  }
 
   return (
     <div className="group bg-[#00040f] border border-[#1d4ed8] rounded-lg text-[#bfdbfe] h-full">
@@ -109,19 +113,16 @@ export default function Box4({
           <span className={`${valueCls} inline`}>{name}</span>
           Current Configuration
         </div>
-        {/**/}
 
         <hr className="w-[99%] mx-auto border-[#3b82f6] mt-1" />
-        {/**/}
-        <div className="bg-[#00040f] border border-[#1d4ed8] rounded-md p-4 mt-2 flex-1 w-full gap-4 pb-5 pt-4 flex flex-col overflow-auto">
-          {/**/}
 
+        <div className="bg-[#00040f] border border-[#1d4ed8] rounded-md p-4 mt-2 flex-1 w-full gap-4 pb-5 pt-4 flex flex-col overflow-auto">
           <div className="flex flex-row items-center gap-4 justify-start">
             <p className=" w-min  text-center">Current Progress</p>
             <SideArrow
-              value={currentProgress}
-              leftArrowClick={decreaseCurrent}
-              rightArrowClick={increaseCurrent}
+              value={state.currentProgress}
+              leftArrowClick={() => dispatch({ type: "DECREASE_CURRENT" })}
+              rightArrowClick={() => dispatch({ type: "INCREASE_CURRENT" })}
             />
             <div
               className="w-full p-1 rounded-sm bg-linear-to-r from-[#1e3a8a]/60 via-[#2563eb] to-[#3b82f6] border
@@ -130,11 +131,8 @@ export default function Box4({
               <span className="pl-[5%]">{motivationalQuote}</span>
             </div>
           </div>
-          {/**/}
 
-          {/**/}
           <div className="flex flex-row items-center gap-4 justify-end">
-            {/*  */}
             <div className="flex flex-row items-center gap-4 justify-start w-full ">
               <div
                 className="bg-[#000d1f] border border-[#1d4ed8] rounded-lg text-[#bfdbfe] p-3 flex flex-col text-center w-full hover:shadow-[0_4px_12px_2px_rgba(192,192,192,0.3),4px_0_8px_0px_rgba(192,192,192,0.15),-4px_0_8px_0px_rgba(192,192,192,0.15)]
@@ -144,16 +142,14 @@ transition-shadow duration-300"
                 <p className="text-xs line-clamp-2">{description}</p>
               </div>
             </div>
-            {/*  */}
 
             <SideArrow
-              value={maxProgress}
-              leftArrowClick={decreaseMax}
-              rightArrowClick={increasemax}
+              value={state.maxProgress}
+              leftArrowClick={() => dispatch({ type: "DECREASE_MAX" })}
+              rightArrowClick={() => dispatch({ type: "INCREASE_MAX" })}
             />
             <p className=" w-min text-center">Max Progress</p>
           </div>
-          {/**/}
         </div>
       </div>
     </div>
