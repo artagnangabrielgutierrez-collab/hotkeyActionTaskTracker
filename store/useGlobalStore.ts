@@ -83,7 +83,7 @@ export const useDashboardInfo = create<useDashboardInfo>()(
           currentProgress: 0,
           maxProgress: 5,
           totalCompletion: 0,
-          hotkey: "E",
+          hotkey: "2E",
           completionHistoryDate: [
             { time: "1/2/3" },
             { time: "1/2/3" },
@@ -100,7 +100,7 @@ export const useDashboardInfo = create<useDashboardInfo>()(
           currentProgress: 0,
           maxProgress: 3,
           totalCompletion: 0,
-          hotkey: "",
+          hotkey: "3R",
           completionHistoryDate: [
             { time: "1/2/3" },
             { time: "1/2/3" },

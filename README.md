@@ -1,36 +1,32 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Description
+Mobile responsive Dynamic website for logging tasks, main feature is the use of hotkey to log tasks, uses Next.js, TypeScript and Tailwind,
+No Spaghetti code. clean code, uses react hooks
 
-## Getting Started
+## Deployed app link
 
-First, run the development server:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Tech Stack
+Next.js, TypeScript, Tailwind, Zustand, JavaScript, CSS, HTML, Vercel
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Navigation
+"<", "Drink Water", ">", and "☰",  is used for switching Tab.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## First Tab (from the left)
+- Use for manually increasing progress with button instead of hotkey/keyboard key.
+- You can view current progress and total task completion here.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Completion History
+- For viewing the date of when you complete the task.
 
-## Learn More
+## Current HotKey / Keyboard Key
+- Shows the current hotkey, pressing the keys that's the same as the hotkey will increase progress or log a task without moving your mouse.
+- Clicking the "hotkey" will make you able to edit the hotkey.
 
-To learn more about Next.js, take a look at the following resources:
+## Current Configuration
+- Allows you to view the task's current settings and edit them by clicking on it.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Other Tasks List
+- A list of other tasks (excluding the current task you're in).
+- Clicking it allows you to switch tasks.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+![Instructions](Instructions.png)

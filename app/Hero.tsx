@@ -1,10 +1,6 @@
 "use client";
-
-
-import { useIsOpen } from "@/store/useGlobalStore";
-import { links } from "@/app/layout";
 import Link from "next/link";
-import React from "react";
+
 export default function Hero() {
   return (
     <>
