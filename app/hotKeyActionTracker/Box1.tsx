@@ -32,7 +32,7 @@ export default function Box1({
       updateDashboardItem(id, {
         currentProgress: 0,
         totalCompletion: totalCompletion + 1,
-        completionHistoryDate: [...completionHistoryDate, { time: new Date().toLocaleString() }]
+        completionHistoryDate: [{ time: new Date().toLocaleString() }, ...completionHistoryDate, ]
       });
     }
   }

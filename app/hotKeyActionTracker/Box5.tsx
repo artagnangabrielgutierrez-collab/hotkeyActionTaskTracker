@@ -103,8 +103,8 @@ export default function Box5({
               totalCompletion: item.totalCompletion + 1,
               completionAnimation: true,
               completionHistoryDate: [
-                ...item.completionHistoryDate,
                 { time: new Date().toLocaleString() },
+                ...item.completionHistoryDate,
               ],
             });
             setTimeout(() => {

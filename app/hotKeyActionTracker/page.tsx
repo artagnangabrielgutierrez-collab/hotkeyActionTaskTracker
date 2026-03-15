@@ -15,6 +15,14 @@ import Box5 from "./Box5";
 import TabBar from "./TabBar";
 import EditHotkey from "./EditHotkey";
 import EditDescription from "./EditDescription";
+import { motion } from "framer-motion";
+
+const fadeUp = (delay = 0) => ({
+  initial: { opacity: 0, y: 24 },
+  animate: { opacity: 1, y: 0 },
+  transition: { duration: 0.5, delay },
+});
+
 export default function HotKeyActionTracker() {
   const dashboardInfo = useDashboardInfo((state) => state.dashboardInfo);
   const setDashboardInfo = useDashboardInfo((state) => state.setDashboardInfo);
@@ -36,7 +44,6 @@ export default function HotKeyActionTracker() {
   const isDescriptionEdit = useIsOpen((state) => state.isDescriptionEdit);
 
   if (!currentDashboardInfo) {
-    //Error handling for currentDashboardInfo (there are some weird scenarios user can do and will result in err)
     setActiveTab(1);
     setTabNumber([0, 1]);
   }
@@ -71,16 +78,25 @@ export default function HotKeyActionTracker() {
         className="mx-auto my-auto grid grid-cols-2 grid-rows-3 gap-4 px-4 pt-4 pb-4 h-90 md:min-h-110 md:h-[65vh] lg:h-[65vh] xl:h-[59vh]  xl:max-w-[75%]"
         data-dashboard="Whole Dashboard Compiled"
       >
-        <div className="col-start-1 row-start-1 row-span-2">
+        <motion.div
+          {...fadeUp(0)}
+          className="col-start-1 row-start-1 row-span-2"
+        >
           <Box1
             currentDashboardInfo={currentDashboardInfo}
             updateDashboardItem={updateDashboardItem}
           />
-        </div>
-        <div className="col-start-2 row-start-1 row-span-4 md:row-span-1">
+        </motion.div>
+        <motion.div
+          {...fadeUp(0.1)}
+          className="col-start-2 row-start-1 row-span-4 md:row-span-1"
+        >
           <Box2 currentDashboardInfo={currentDashboardInfo} />
-        </div>
-        <div className="col-start-2 row-start-2 row-span-3 hidden md:block">
+        </motion.div>
+        <motion.div
+          {...fadeUp(0.2)}
+          className="col-start-2 row-start-2 row-span-3 hidden md:block"
+        >
           <Box5
             dashboardInfo={dashboardInfo}
             activeTab={activeTab}
@@ -88,17 +104,25 @@ export default function HotKeyActionTracker() {
             setTabNumber={setTabNumber}
             updateDashboardItem={updateDashboardItem}
           />
-        </div>
-        <div className="col-start-1 row-start-3 row-span-2 ">
+        </motion.div>
+        <motion.div
+          {...fadeUp(0.3)}
+          className="col-start-1 row-start-3 row-span-2 "
+        >
           <Box3 hotkey={currentDashboardInfo?.hotkey!} />
-        </div>
+        </motion.div>
       </div>
       <div className="col-start-1 col-span-2 row-start-6 row-span-6 px-4 xl:max-w-[75%] mx-auto">
-        <Box4
-          currentDashboardInfo={currentDashboardInfo}
-          updateDashboardItem={updateDashboardItem}
-        />
-        <div className="col-start-2 row-start-2 row-span-3  md:hidden pt-4">
+        <motion.div {...fadeUp(0.4)}>
+          <Box4
+            currentDashboardInfo={currentDashboardInfo}
+            updateDashboardItem={updateDashboardItem}
+          />
+        </motion.div>
+        <motion.div
+          {...fadeUp(0.5)}
+          className="col-start-2 row-start-2 row-span-3 md:hidden pt-4"
+        >
           <Box5
             dashboardInfo={dashboardInfo}
             activeTab={activeTab}
@@ -106,7 +130,7 @@ export default function HotKeyActionTracker() {
             setTabNumber={setTabNumber}
             updateDashboardItem={updateDashboardItem}
           />
-        </div>
+        </motion.div>
       </div>
     </section>
   );
