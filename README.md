@@ -29,4 +29,4 @@ Next.js, TypeScript, Tailwind, Zustand, JavaScript, CSS, HTML, Vercel
 - A list of other tasks (excluding the current task you're in).
 - Clicking it allows you to switch tasks.
 
-![Instructions](Instructions.png)
+![Instructions](public/Instructions.png)

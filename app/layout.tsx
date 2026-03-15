@@ -28,7 +28,6 @@ function Navbar() {
     <>
       <nav className="flex items-center justify-between  px-2 py-3 border-b border-neutral-800 bg-black text-white text-sm ">
         <div className="flex items-center font-semibold text-base">
-          <span className="text-white">▲</span>
           <Link href="./">HotKey Action Tracker</Link>
         </div>
 
@@ -45,7 +44,11 @@ function Navbar() {
         </div>
 
         <div className="flex items-center gap-2 text-xl">
-          <a className="text-neutral-400 hover:text-white transition-colors p-1.5 text-center text-sm" href="">
+          <a
+            className="text-neutral-400 hover:text-white transition-colors p-1.5 text-center text-sm"
+            href="https://github.com/artagnangabrielgutierrez-collab/Hotkey-Action-Task-Tracker"
+            target="_blank"
+          >
             Github
           </a>
 

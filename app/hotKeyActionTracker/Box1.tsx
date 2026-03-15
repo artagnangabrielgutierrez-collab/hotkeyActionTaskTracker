@@ -4,7 +4,7 @@ import {
   useDashboardInfoType,
   useDashboardInfo,
 } from "@/store/useGlobalStore";
-import { Award, Settings } from "lucide-react";
+import { Award,  } from "lucide-react";
 type updateDashboardItem = useDashboardInfoType["updateDashboardItem"];
 
 interface Box1Props {
@@ -26,12 +26,13 @@ export default function Box1({
 
   const dashboardInfo = useDashboardInfo((state) => state.dashboardInfo); //for debugging only
   function handleManualIncrease() {
+    
     updateDashboardItem(id, { currentProgress: currentProgress + 1 });
     if (currentProgress + 1 === maxProgress) {
       updateDashboardItem(id, {
         currentProgress: 0,
         totalCompletion: totalCompletion + 1,
-        completionAnimation: true,
+        completionHistoryDate: [...completionHistoryDate, { time: new Date().toLocaleString() }]
       });
     }
   }
@@ -61,7 +62,7 @@ export default function Box1({
             </span>
           </div>
           <div className="text-sm relative flex flex-row items-center justify-center  px-1 py-1 mt-4 min-w-15 rounded-sm border border-[#1d4ed8]/50 bg-[#000d1f]/50 z-10">
-            <Award className="w-3 h-3  text-purple-400" />
+            <Award className=" w-5  text-purple-400 text-center my-auto" />
             {totalCompletion}
           </div>
         </div>
@@ -86,9 +87,7 @@ export default function Box1({
           >
             Increase
           </button>
-          <button className="p-1 text-[#bfdbfe] rounded-lg border border-[#3b82f6] shadow-lg transition-all duration-300 transform bg-linear-to-r from-[#1d4ed8] to-[#3b82f6] hover:from-[#2563eb] hover:to-[#60a5fa] hover:shadow-[#3b82f6]/50 hover:scale-105">
-            <Settings size={16} />
-          </button>
+
         </div>
       </div>
     </div>

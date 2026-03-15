@@ -102,6 +102,10 @@ export default function Box5({
               currentProgress: 0,
               totalCompletion: item.totalCompletion + 1,
               completionAnimation: true,
+              completionHistoryDate: [
+                ...item.completionHistoryDate,
+                { time: new Date().toLocaleString() },
+              ],
             });
             setTimeout(() => {
               updateDashboardItem(item.id, {
