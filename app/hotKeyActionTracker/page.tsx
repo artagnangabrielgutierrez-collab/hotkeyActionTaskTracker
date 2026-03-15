@@ -68,7 +68,7 @@ export default function HotKeyActionTracker() {
 
       <TabBar />
       <div
-        className="grid grid-cols-2 grid-rows-3 gap-4 h-90 md:h-110 px-4 pt-4 xl:max-w-[75%] mx-auto pb-4 my-auto "
+        className="mx-auto my-auto grid grid-cols-2 grid-rows-3 gap-4 px-4 pt-4 pb-4 h-90 md:min-h-110 md:h-[65vh] lg:h-[65vh] xl:h-[59vh]  xl:max-w-[75%]"
         data-dashboard="Whole Dashboard Compiled"
       >
         <div className="col-start-1 row-start-1 row-span-2">
@@ -87,7 +87,6 @@ export default function HotKeyActionTracker() {
             setActiveTab={setActiveTab}
             setTabNumber={setTabNumber}
             updateDashboardItem={updateDashboardItem}
-            
           />
         </div>
         <div className="col-start-1 row-start-3 row-span-2 ">
@@ -106,7 +105,6 @@ export default function HotKeyActionTracker() {
             setActiveTab={setActiveTab}
             setTabNumber={setTabNumber}
             updateDashboardItem={updateDashboardItem}
-            
           />
         </div>
       </div>

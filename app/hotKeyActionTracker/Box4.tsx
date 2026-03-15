@@ -1,7 +1,6 @@
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { useReducer, useEffect } from "react";
+import { useReducer,  } from "react";
 import {
-  useDashboardInfo,
   DashboardInfoType,
   useDashboardInfoType,
   useIsOpen,

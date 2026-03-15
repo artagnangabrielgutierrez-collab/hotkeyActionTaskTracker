@@ -1,7 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
 import {
-  useActiveTab,
   useTabNumber,
   DashboardInfoType,
   useDashboardInfoType,
@@ -20,7 +19,14 @@ function TaskCard({
   setActiveTab,
   setTabNumber,
 }: TaskCardProps) {
-  const { id, name, hotkey, currentProgress, maxProgress } = dashboardInfo;
+  const {
+    id,
+    name,
+    hotkey,
+    currentProgress,
+    maxProgress,
+    completionAnimation,
+  } = dashboardInfo;
   const tabNumber = useTabNumber((state) => state.tabNumber);
   const [isMobile, setIsMobile] = useState(false);
 
@@ -41,9 +47,9 @@ function TaskCard({
 
   return (
     <div
-      className="flex flex-col gap-1 p-2 rounded-lg border border-[#1d4ed8]/50 bg-[#00040f]/50 
+      className={`flex flex-col gap-1 p-2 rounded-lg border border-[#1d4ed8]/50 bg-[#00040f]/50 
     hover:shadow-[0_4px_12px_2px_rgba(192,192,192,0.3),4px_0_8px_0px_rgba(192,192,192,0.15),-4px_0_8px_0px_rgba(192,192,192,0.15)]
-transition-shadow duration-300"
+    transition-all duration-300 ${completionAnimation ? "border border-blue-400 shadow-2xl shadow-blue-500/80 scale-101 bg-blue-800/50" : ""}`}
       onClick={switchTab}
     >
       <div className="flex items-center gap-2 px-2">
@@ -81,24 +87,27 @@ export default function Box5({
   setTabNumber,
   updateDashboardItem,
 }: Box5Props) {
-  
   //For increasing progress with hotkey
   useEffect(() => {
     const heldKeys = new Set<string>();
 
     function handleKeyDown(e: KeyboardEvent) {
       heldKeys.add(e.key);
-      console.log("held keys:", [...heldKeys]);
       dashboardInfo.forEach((item) => {
-        const key = [...heldKeys].join("");
+        const key = [...heldKeys].join("").toUpperCase();
         if (key === item.hotkey) {
           const newProgress = item.currentProgress + 1;
           if (newProgress >= item.maxProgress) {
             updateDashboardItem(item.id, {
               currentProgress: 0,
               totalCompletion: item.totalCompletion + 1,
+              completionAnimation: true,
             });
-            
+            setTimeout(() => {
+              updateDashboardItem(item.id, {
+                completionAnimation: false,
+              });
+            }, 400);
           } else {
             updateDashboardItem(item.id, { currentProgress: newProgress });
           }

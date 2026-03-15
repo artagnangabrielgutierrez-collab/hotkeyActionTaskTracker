@@ -1,6 +1,4 @@
 "use client";
-import { useEffect, useReducer } from "react";
-
 import {
   DashboardInfoType,
   useDashboardInfoType,
@@ -25,7 +23,7 @@ export default function Box1({
     Math.round((currentProgress / maxProgress) * 100),
     100,
   );
-  
+
   const dashboardInfo = useDashboardInfo((state) => state.dashboardInfo); //for debugging only
   function handleManualIncrease() {
     updateDashboardItem(id, { currentProgress: currentProgress + 1 });
@@ -33,23 +31,10 @@ export default function Box1({
       updateDashboardItem(id, {
         currentProgress: 0,
         totalCompletion: totalCompletion + 1,
+        completionAnimation: true,
       });
     }
   }
-
-  //this is temp, move later
-  const reducer = (state: any, action: any) => {
-    switch (action.type) {
-      case "INCREMENT":
-        return { count: state.count + 1 };
-      case "DECREMENT":
-        return { count: state.count - 1 };
-      default:
-        return state;
-    }
-  };
-
-  const [state, dispatch] = useReducer(reducer, { count: 0 });
 
   return (
     <div
