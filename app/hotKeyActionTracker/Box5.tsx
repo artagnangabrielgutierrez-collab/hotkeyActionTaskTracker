@@ -140,8 +140,8 @@ transition-shadow duration-300"
         <h1 className="pb-2 text-sm text-[#93c5fd] uppercase tracking-wide border-b border-[#3b82f6]/40">
           Other Tasks List
         </h1>
-        <div className="mt-2 flex-1 w-full">
-          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="mt-2 flex-1 w-full ">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {dashboardInfo
               .filter((e) => e.id != activeTab)
               .map((e) => (

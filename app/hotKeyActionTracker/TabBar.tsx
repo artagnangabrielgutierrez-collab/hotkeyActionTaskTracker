@@ -18,7 +18,7 @@ export default function TabBar() {
   const dashboardInfo = useDashboardInfo((state) => state.dashboardInfo);
   const isTabMenu = useIsOpen((state) => state.isTabMenu);
   const setIsTabMenu = useIsOpen((state) => state.setIsTabMenu);
-
+  const setNewTab = useDashboardInfo((state) => state.setNewTab);
   const [maxTabs, setMaxTabs] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
 
@@ -55,6 +55,15 @@ export default function TabBar() {
     }
   }
 
+  function deleteTab(tab, e) {
+    e.stopPropagation();
+    let newArr = dashboardInfo.filter((e) => e.uniqueId !== tab.uniqueId);
+    setNewTab(newArr);
+  }
+
+  useEffect(() => {
+    localStorage.clear()
+  }, []);
   return (
     <>
       <section className="flex flex-col bg-[#13131f]  pt-3 flex-wrap ">
@@ -72,21 +81,30 @@ export default function TabBar() {
               const isActive = tab.id === activeTab;
               return (
                 <section key={tab.id}>
-                  <div className="pr-">
-                    <button
-                      key={tab.id}
-                      onClick={() => setActiveTab(tab.id)}
-                      data-active={isActive}
-                      className="relative flex items-center gap-1 px-4 py-2   transition-all duration-200 rounded-t-md cursor-pointer border-none
-               bg-slate-900 text-slate-500 hover:text-slate-300 data-[active=true]:bg-slate-800 data-[active=true]:text-slate-100 w-35"
-                    >
-                      {/*<span className=" opacity-70">{tab.icon}</span>*/}
-                      <span className="font-medium truncate">{tab.name}</span>
-                    </button>
+                  {/* Tab Start */}
+                  <div
+                    key={tab.id}
+                    onClick={() => setActiveTab(tab.id)}
+                    data-active={isActive}
+                    className="relative flex items-center gap-1 px-4 py-2 transition-all duration-200 rounded-t-md cursor-pointer border-none
+  bg-slate-900 text-slate-500 hover:text-slate-300 data-[active=true]:bg-slate-800 data-[active=true]:text-slate-100 w-35"
+                  >
+                    <span className="font-medium truncate">{tab.name}</span>
+                    {tab.id === 1 ? (
+                      ""
+                    ) : (
+                      <button
+                        className="text-red-500 hover:text-red-300 cursor-pointer transition-colors duration-200 absolute top-0 right-0 p-1"
+                        onClick={(e) => deleteTab(tab, e)}
+                      >
+                        ✕
+                      </button>
+                    )}
                   </div>
                   <div
                     className={`w-full h-[0.40rem] ${isActive ? "bg-indigo-500" : ""}  z-1`}
                   />
+                  {/* End */}
                 </section>
               );
             })}

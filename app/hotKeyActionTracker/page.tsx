@@ -49,8 +49,6 @@ export default function HotKeyActionTracker() {
     setTabNumber([0, 1]);
   }
 
-
-
   return (
     <section className="min-h-[90vh] pb-6 ">
       {/* Conditional Components */}
@@ -94,12 +92,19 @@ export default function HotKeyActionTracker() {
           {...fadeUp(0.1)}
           className="col-start-2 row-start-1 row-span-4 md:row-span-1"
         >
-          <Box2 currentDashboardInfo={currentDashboardInfo} />
+          <Box5
+            dashboardInfo={dashboardInfo}
+            activeTab={activeTab}
+            setActiveTab={setActiveTab}
+            setTabNumber={setTabNumber}
+            updateDashboardItem={updateDashboardItem}
+          />
         </motion.div>
         <motion.div
           {...fadeUp(0.2)}
           className="col-start-2 row-start-2 row-span-3 hidden md:block"
         >
+          {/* for md screens and above */}
           <Box5
             dashboardInfo={dashboardInfo}
             activeTab={activeTab}
@@ -126,13 +131,8 @@ export default function HotKeyActionTracker() {
           {...fadeUp(0.5)}
           className="col-start-2 row-start-2 row-span-3 md:hidden pt-4 "
         >
-          <Box5
-            dashboardInfo={dashboardInfo}
-            activeTab={activeTab}
-            setActiveTab={setActiveTab}
-            setTabNumber={setTabNumber}
-            updateDashboardItem={updateDashboardItem}
-          />
+          {/* for mobile */}
+          <Box2 currentDashboardInfo={currentDashboardInfo} />
         </motion.div>
         <motion.div
           {...fadeUp(0.5)}

@@ -49,6 +49,7 @@ export default function AddNewTab({
 
   function onSubmit(data: formInput) {
     const result = {
+      uniqueId: crypto.randomUUID(),
       id: dashboardInfo.length + 1,
       name: data.name,
       currentProgress: 0,
@@ -61,6 +62,7 @@ export default function AddNewTab({
     };
     setDashboardInfo(result);
     reset();
+    console.log(dashboardInfo)
   }
 
   const errorClass = "border-red-500 shadow-[0_0_0_2px_rgba(239,68,68,0.3)]";
