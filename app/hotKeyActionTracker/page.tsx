@@ -18,6 +18,7 @@ import EditDescription from "./EditDescription";
 import { motion } from "framer-motion";
 import { useEffect } from "react";
 import Box6 from "./Box6";
+import Heatmap from "./Heatmap";
 const fadeUp = (delay = 0) => ({
   initial: { opacity: 0, y: 24 },
   animate: { opacity: 1, y: 0 },
@@ -122,16 +123,21 @@ export default function HotKeyActionTracker() {
       </div>
       <div className="col-start-1 col-span-2 row-start-6 row-span-6 px-4 xl:max-w-[55%] mx-auto">
         <motion.div {...fadeUp(0.4)} className="">
-          <Box4
-            currentDashboardInfo={currentDashboardInfo}
-            updateDashboardItem={updateDashboardItem}
-          />
+          <Heatmap />
         </motion.div>
         <motion.div
           {...fadeUp(0.5)}
           className="col-start-2 row-start-2 row-span-3 md:hidden pt-4 "
         >
           {/* for mobile */}
+          <motion.div {...fadeUp(0.4)} className="pt-">
+            <Box4
+              currentDashboardInfo={currentDashboardInfo}
+              updateDashboardItem={updateDashboardItem}
+            />
+          </motion.div>
+        </motion.div>{" "}
+        <motion.div {...fadeUp(0.4)} className="pt-4">
           <Box2 currentDashboardInfo={currentDashboardInfo} />
         </motion.div>
         <motion.div

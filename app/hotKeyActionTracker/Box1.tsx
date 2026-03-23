@@ -11,7 +11,7 @@ interface Box1Props {
   currentDashboardInfo: DashboardInfoType;
   updateDashboardItem: updateDashboardItem;
 }
-import { useProgress } from "@/store/useGlobalStore";
+
 
 export default function Box1({
   currentDashboardInfo,

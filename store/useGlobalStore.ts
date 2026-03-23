@@ -1,5 +1,3 @@
-//@ts-nocheck
-
 import { create } from "zustand";
 
 import { persist, createJSONStorage } from "zustand/middleware";
@@ -38,7 +36,8 @@ export const useIsOpen = create<useIsOpen>((set) => ({
 }));
 
 export type DashboardInfoType = {
-  id: number;
+  uniqueId: string;
+  id: number; //For tracking tabs (animations, activeTab,etc)
   name: string;
   currentProgress: number;
   maxProgress: number;
@@ -51,54 +50,55 @@ export type DashboardInfoType = {
 
 export type useDashboardInfoType = {
   dashboardInfo: DashboardInfoType[];
-  setDashboardInfo: (newItem: DashboardItem) => void;
+  setDashboardInfo: (newItem: DashboardInfoType) => void;
   updateDashboardItem: (
     id: number,
     updates: Partial<DashboardInfoType>,
   ) => void;
 };
 
+//N: Fix namings of functions
 export const useDashboardInfo = create<useDashboardInfo>()(
   persist(
     (set) => ({
       dashboardInfo: [
         {
+          uniqueId: crypto.randomUUID(),
           id: 1,
-          name: "Drink Water",
+          name: "Sample",
           currentProgress: 1,
           maxProgress: 3,
           totalCompletion: 0,
           hotkey: "1Q",
           completionHistoryDate: [{ time: "3/15/2026, 12:51:59 PM" }],
           completionAnimation: false,
-          description: "Drink water every 30 minutes, 8 cups total per day",
+          description: "Sample description",
         },
-        {
+                {
+          uniqueId: crypto.randomUUID(),
           id: 2,
-          name: "Screen BreakTime",
-          currentProgress: 0,
-          maxProgress: 5,
-          totalCompletion: 0,
-          hotkey: "2E",
-          completionHistoryDate: [{ time: "3/15/2026, 12:51:59 PM" }],
-          completionAnimation: false,
-          description:
-            "Step away from the screen every hour for at least 5 minutes",
-        },
-        {
-          id: 3,
-          name: "Walk for 5 minutes",
-          currentProgress: 0,
+          name: "2",
+          currentProgress: 1,
           maxProgress: 3,
           totalCompletion: 0,
-          hotkey: "3R",
-          completionHistoryDate: [
-            { time: "3/15/2026, 12:51:59 PM" },
-            { time: "3/15/2026, 12:51:59 PM" },
-          ],
+          hotkey: "1Q",
+          completionHistoryDate: [{ time: "3/15/2026, 12:51:59 PM" }],
           completionAnimation: false,
-          description: "Walk for 5 minutes per 1 hour",
+          description: "Sample description",
         },
+                {
+          uniqueId: crypto.randomUUID(),
+          id: 3,
+          name: "3",
+          currentProgress: 1,
+          maxProgress: 3,
+          totalCompletion: 0,
+          hotkey: "1Q",
+          completionHistoryDate: [{ time: "3/15/2026, 12:51:59 PM" }],
+          completionAnimation: false,
+          description: "Sample description",
+        },
+
       ],
       setDashboardInfo: (
         newItem, //for adding new tab only
@@ -111,6 +111,12 @@ export const useDashboardInfo = create<useDashboardInfo>()(
           dashboardInfo: state.dashboardInfo.map((item) =>
             item.id === id ? { ...item, ...updates } : item,
           ),
+        })),
+      setNewTab: (
+        newArr, //used for deleting a tab
+      ) =>
+        set(() => ({
+          dashboardInfo: newArr,
         })),
     }),
     {
@@ -142,8 +148,6 @@ export const useTabNumber = create<useTabNumberProps>((set) => ({
 interface ProgressStore {
   currentProgress: number;
   maxProgress: number;
-  decreaseCurrent: () => void;
-  increaseCurrent: () => void;
   decreaseMax: () => void;
   increaseMax: () => void;
   setInitialValue: (currentProgress: number, maxProgress: number) => void;
