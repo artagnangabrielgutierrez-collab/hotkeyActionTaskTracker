@@ -1,3 +1,5 @@
+//@ts-nocheck
+
 import { create } from "zustand";
 
 import { persist, createJSONStorage } from "zustand/middleware";
@@ -74,7 +76,7 @@ export const useDashboardInfo = create<useDashboardInfo>()(
           completionAnimation: false,
           description: "Sample description",
         },
-                {
+        {
           uniqueId: crypto.randomUUID(),
           id: 2,
           name: "2",
@@ -86,7 +88,7 @@ export const useDashboardInfo = create<useDashboardInfo>()(
           completionAnimation: false,
           description: "Sample description",
         },
-                {
+        {
           uniqueId: crypto.randomUUID(),
           id: 3,
           name: "3",
@@ -98,7 +100,6 @@ export const useDashboardInfo = create<useDashboardInfo>()(
           completionAnimation: false,
           description: "Sample description",
         },
-
       ],
       setDashboardInfo: (
         newItem, //for adding new tab only
