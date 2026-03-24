@@ -13,7 +13,7 @@ interface Box1Props {
 }
 
 
-export default function Box1({
+export default function ProgressBar({
   currentDashboardInfo,
   updateDashboardItem,
 }: Box1Props) {

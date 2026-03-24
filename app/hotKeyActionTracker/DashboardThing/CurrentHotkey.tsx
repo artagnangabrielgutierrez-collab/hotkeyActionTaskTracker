@@ -4,7 +4,7 @@ interface Box3Props {
   hotkey: string;
 }
 
-export default function Box3({ hotkey }: Box3Props) {
+export default function CurrentHotkey({ hotkey }: Box3Props) {
   const setIsHotkeyEdit = useIsOpen((state) => state.setIsHotkeyEdit);
   return (
     <div className="group bg-[#00040f] border border-[#1d4ed8] rounded-lg text-[#bfdbfe]  h-full">

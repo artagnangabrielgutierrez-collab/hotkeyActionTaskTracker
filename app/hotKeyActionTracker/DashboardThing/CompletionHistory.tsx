@@ -5,7 +5,7 @@ import { DashboardInfoType } from "@/store/useGlobalStore";
 interface Box2Props {
   currentDashboardInfo: DashboardInfoType;
 }
-export default function Box2({ currentDashboardInfo }: Box2Props) {
+export default function CompletionHistory({ currentDashboardInfo }: Box2Props) {
   const [completionHistoryCount, setCompletionHistoryCount] = useState(0);
 
   useEffect(() => {

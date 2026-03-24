@@ -56,7 +56,7 @@ type Action =
   | { type: "DECREASE_MAX" }
   | { type: "INCREASE_MAX" };
 
-export default function Box4({
+export default function CurrentConfiguration({
   currentDashboardInfo,
   updateDashboardItem,
 }: Box4Props) {

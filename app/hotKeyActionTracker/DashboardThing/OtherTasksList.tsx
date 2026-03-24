@@ -80,7 +80,7 @@ interface Box5Props {
   updateDashboardItem: updateDashboardItem;
 }
 
-export default function Box5({
+export default function OtherTasksList({
   dashboardInfo,
   activeTab,
   setActiveTab,
