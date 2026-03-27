@@ -142,9 +142,9 @@ export default function CurrentConfiguration({
     <div className=" h-0  ">
       <div className="bg-[#000d1f] border border-[#3b82f6] rounded-lg  flex flex-col group-hover:shadow-[0_4px_12px_2px_rgba(59,130,246,0.3),4px_0_8px_0px_rgba(59,130,246,0.15),-4px_0_8px_0px_rgba(59,130,246,0.15)] transition-shadow duration-300 text-sm p-3">
         <div className="pb-2 flex gap-2 justify-start items-center">
-          <span className={`${valueCls} inline`}>{name}</span>
-          Current Configuration
-          <span className="ml-auto">{quote}</span>
+          <span className={`${valueCls} inline `}>{name}</span>
+          <span className="text-xs">Current Configuration</span>
+          <span className="ml-auto text-xs">{quote}</span>
         </div>
 
         <hr className="w-[99%] mx-auto border-[#3b82f6] mt-1" />

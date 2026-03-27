@@ -1,6 +1,5 @@
 "use client";
 import { useState } from "react";
-import {} from "@/store/useGlobalStore";
 import {
   useIsOpen,
   DashboardInfoType,
@@ -17,9 +16,7 @@ export default function EditDescription({
 }: EditDescriptionProps) {
   const { id } = currentDashboardInfo;
   const setIsDescriptionEdit = useIsOpen((state) => state.setIsDescriptionEdit);
-  const [newDescriptionValue, setNewDescriptionValue] = useState("");
-
-  function updateDescription() {
+  const [newDescriptionValue, setNewDescriptionValue] = useState("");  function updateDescription() {
     updateDashboardItem(id, { description: newDescriptionValue });
     setIsDescriptionEdit(false);
   }

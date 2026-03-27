@@ -6,10 +6,10 @@ import CurrentHotkey from "./CurrentHotkey";
 import CurrentConfiguration from "./CurrentConfiguration";
 import OtherTasksList from "./OtherTasksList";
 import { motion } from "framer-motion";
-import Quote from "./Quote";
 import {
   DashboardInfoType,
   useDashboardInfoType,
+  useSwitchTab,
 } from "@/store/useGlobalStore";
 
 type DashbordCompiledProps = {
@@ -35,10 +35,15 @@ export default function DashbordCompiled({
   setActiveTab,
   setTabNumber,
 }: DashbordCompiledProps) {
+  const { viewPrevTabs, viewNextTabs } = useSwitchTab();
+
   return (
     <>
       <div className="flex flex-row items-center justify-center">
-        <button className="hidden lg:flex items-center justify-center bg-transparent border-none cursor-pointer hover:opacity-70 active:scale-95 transition-all">
+        <button
+          className="hidden lg:flex items-center justify-center bg-transparent border-none cursor-pointer hover:opacity-70 active:scale-95 transition-all"
+          onClick={viewPrevTabs}
+        >
           <svg
             width="70"
             height="70"
@@ -111,7 +116,10 @@ export default function DashbordCompiled({
           </motion.div>
           {/*End*/}
         </div>
-        <button className="hidden lg:flex items-center justify-center bg-transparent border-none cursor-pointer hover:opacity-70 active:scale-95 transition-all">
+        <button
+          className="hidden lg:flex items-center justify-center bg-transparent border-none cursor-pointer hover:opacity-70 active:scale-95 transition-all"
+          onClick={viewNextTabs}
+        >
           <svg
             width="70"
             height="70"

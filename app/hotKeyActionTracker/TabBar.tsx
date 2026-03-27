@@ -8,6 +8,8 @@ import {
   useIsOpen,
   useTabNumber,
   DashboardInfoType,
+  useIsMobile,
+  useSwitchTab,
 } from "@/store/useGlobalStore";
 import { Award, Menu } from "lucide-react";
 
@@ -22,7 +24,8 @@ export default function TabBar() {
   const setIsTabMenu = useIsOpen((state) => state.setIsTabMenu);
   const setNewTab = useDashboardInfo((state) => state.setNewTab);
   const [maxTabs, setMaxTabs] = useState(0);
-  const [isMobile, setIsMobile] = useState(false);
+  const { isMobile, setIsMobile } = useIsMobile();
+  const { viewPrevTabs, viewNextTabs } = useSwitchTab();
 
   useEffect(() => {
     function update() {
@@ -36,18 +39,6 @@ export default function TabBar() {
     window.addEventListener("resize", update);
     return () => window.removeEventListener("resize", update);
   }, []);
-
-  function viewPrevTabs() {
-    setActiveTab(activeTab - 1);
-    if (isMobile) setTabNumber([tabNumber[0] - 1, tabNumber[1] - 1]);
-  }
-
-  function viewNextTabs() {
-    setActiveTab(activeTab + 1);
-    if (isMobile) {
-      setTabNumber([tabNumber[0] + 1, tabNumber[1] + 1]);
-    }
-  }
 
   function dropdownMenuTabChange(id: number) {
     setActiveTab(id);

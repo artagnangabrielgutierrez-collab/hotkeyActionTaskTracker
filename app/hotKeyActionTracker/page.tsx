@@ -38,6 +38,8 @@ export default function HotKeyActionTracker() {
     return null;
   }
 
+  
+
   return (
     <section className="min-h-[90vh] pb-6 ">
       {/* Conditional Components */}
