@@ -66,7 +66,7 @@ export const useDashboardInfo = create<useDashboardInfoType>()(
     (set) => ({
       dashboardInfo: [
         {
-          uniqueId: crypto.randomUUID(),
+          uniqueId: typeof crypto !== "undefined" ? crypto.randomUUID() : "",
           id: 1,
           name: "Sample",
           currentProgress: 1,
@@ -78,7 +78,7 @@ export const useDashboardInfo = create<useDashboardInfoType>()(
           description: "Sample description",
         },
         {
-          uniqueId: crypto.randomUUID(),
+          uniqueId: typeof crypto !== "undefined" ? crypto.randomUUID() : "",
           id: 2,
           name: "Sample 2",
           currentProgress: 0,
@@ -90,7 +90,7 @@ export const useDashboardInfo = create<useDashboardInfoType>()(
           description: "Sample description",
         },
         {
-          uniqueId: crypto.randomUUID(),
+          uniqueId: typeof crypto !== "undefined" ? crypto.randomUUID() : "",
           id: 3,
           name: "Sample 3",
           currentProgress: 6,
@@ -184,4 +184,41 @@ export const useProgress = create<ProgressStore>((set) => ({
     }),
   setInitialValue: (currentProgress: number, maxProgress: number) =>
     set({ currentProgress, maxProgress }),
+}));
+
+type useIsMobileType = {
+  isMobile: boolean;
+  setIsMobile: (val: boolean) => void;
+};
+
+export const useIsMobile = create<useIsMobileType>((set) => ({
+  isMobile: false,
+  setIsMobile: (val) => set({ isMobile: val }),
+}));
+
+type useSwitchTabType = {
+  viewPrevTabs: () => void;
+  viewNextTabs: () => void;
+};
+
+export const useSwitchTab = create<useSwitchTabType>(() => ({
+  viewPrevTabs: () => {
+    const { activeTab, setActiveTab } = useActiveTab.getState();
+    const { tabNumber, setTabNumber } = useTabNumber.getState();
+    const { isMobile } = useIsMobile.getState();
+    const { dashboardInfo } = useDashboardInfo.getState();
+
+    const prev = activeTab === 1 ? dashboardInfo.length : activeTab - 1;
+    setActiveTab(prev);
+    if (isMobile) setTabNumber([tabNumber[0] - 1, tabNumber[1] - 1]);
+  },
+
+  viewNextTabs: () => {
+    const { activeTab, setActiveTab } = useActiveTab.getState();
+    const { tabNumber, setTabNumber } = useTabNumber.getState();
+    const { isMobile } = useIsMobile.getState();
+
+    setActiveTab(activeTab + 1);
+    if (isMobile) setTabNumber([tabNumber[0] + 1, tabNumber[1] + 1]);
+  },
 }));
