@@ -134,14 +134,14 @@ export default function OtherTasksList({
   return (
     <div
       className="group bg-[#00040f] border border-[#1d4ed8] rounded-lg text-[#bfdbfe] h-full hover:shadow-[0_4px_12px_2px_rgba(59,130,246,0.3),4px_0_8px_0px_rgba(59,130,246,0.15),-4px_0_8px_0px_rgba(59,130,246,0.15)]
-transition-shadow duration-300"
+transition-shadow duration-300 "
     >
       <div className="bg-[#000d1f] border border-[#3b82f6] rounded-lg w-full h-full flex flex-col text-sm p-4 overflow-auto">
         <h1 className="pb-2 text-sm text-[#93c5fd] uppercase tracking-wide border-b border-[#3b82f6]/40">
           Other Tasks List
         </h1>
         <div className="mt-2 flex-1 w-full ">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 overflow-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 overflow-auto w-full">
             {dashboardInfo
               .filter((e) => e.id != activeTab)
               .map((e) => (
